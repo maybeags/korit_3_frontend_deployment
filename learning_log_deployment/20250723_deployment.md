@@ -36,11 +36,13 @@ npm list gh-pages
 사전 설정을 제가 해둔 상태기 때문에 파일들을 좀 참조하겠습니다.
 
 ```ts
+// vite.config.ts
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  base: '/carlist_front/',    // 여기가 중요한 부분입니다.
+  base: '/korit_3_front_deployment_example/',
+  // base는 리포지토리명과 동일하게 가져갑니다.
   plugins: [react()],
 });
 ```
@@ -56,3 +58,32 @@ export default defineConfig({
     "deploy": "gh-pages -d dist"
   }
 ```
+
+gh-pages까지 push 하신 분들은
+npm run deploy를 입력하면 되는데, 그러면 deploy하기 전에 predeploy가 실행된다.
+
+즉 
+npm run deploy 엔터치면
+npm run build가 먼저 실행되고 그 다음에
+npm run deploy가 실행됨.
+
+Published까지 확인을 하셨으면 성공적으로 배포가 완료된것입니다.
+
+https://여러분깃허브아이디.github.io/korit_3_frontend_deployment/
+https://maybeags.github.io/korit_3_frontend_deployment/
+로 들어가시면 됩니다.
+
+혹시 안된다
+다시 push하고 npm run deploy를 실행해보세요.
+
+docker로 db 이미지를 감싸버렸기 때문에 heidiSQL에서 다이렉트로 데이터 유무를 확인할 수 없습니다.
+그래서 docker desktop에서 확인하는 법
+좌측에 Containers 클릭 -> cardb 선택(DB 선택) -> Exec 선택
+저희는 마리아db를 사용 중이기 때문에
+mariadb -u root -p 선택하면 비밀번호 물어봅니다. 우리는 1234입니다.(복사 붙여넣기 할 때 터미널에서처럼 shift + ins)
+
+그 다음에
+SHOW databases;
+
+USE cardb;
+이후에는 sql문으로 데이터 CRUD가 가능합니다.
